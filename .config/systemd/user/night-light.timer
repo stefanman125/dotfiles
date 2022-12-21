@@ -1,0 +1,9 @@
+[Unit]
+Description=Run night-light every 60 min
+
+[Timer]
+OnCalendar=hourly
+Persistent=true
+
+[Install]
+WantedBy=timers.target

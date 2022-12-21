@@ -1,0 +1,10 @@
+[Unit]
+Description=Runs the night-light script
+Wants=night-light.timer
+
+[Service]
+Type=oneshot
+ExecStart=/home/stefan/.local/bin/night-light.sh
+
+[Install]
+WantedBy=multi-user.target

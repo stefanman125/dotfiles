@@ -1,0 +1,10 @@
+[Unit]
+Description=Runs the battery-check script
+Wants=battery-check.timer
+
+[Service]
+Type=oneshot
+ExecStart=/home/stefan/.local/bin/battery-check.sh
+
+[Install]
+WantedBy=multi-user.target
