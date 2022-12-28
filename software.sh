@@ -20,3 +20,7 @@ dnf install vlc
 
 # Feh (Background image)
 dnf install feh
+
+# Nvidia drivers
+dnf install akmod-nvidia
+dnf install xorg-x11-drv-nvidia-cuda
