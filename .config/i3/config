@@ -213,13 +213,21 @@ exec_always --no-startup-id xss-lock -- lock &
 exec_always feh --bg-scale ~/Pictures/background.png
 
 # Assign hotkey to lock screen script
-bindsym $mod+grave exec "i3lock -i ~/Pictures/Lock\ Screen/1.png -f"
+# bindsym $mod+grave exec "i3lock -i ~/Pictures/Lock\ Screen/1.png -f"
+# Screenshots and blurs desktop as lock screen
+bindsym $mod+grave exec "scrot /tmp/lock_screen.png -o; convert -scale 10% -blur 0x2 -resize 1000% /tmp/lock_screen.png /tmp/lock_screen.png; i3lock -i /tmp/lock_screen.png -f"
 
 # Fix primary monitor and monitor position (sorta, still need to work on the left and right monitor relative position to the center monitor)
-exec xrandr --output HDMI-0 --off --output DP-0 --off --output DP-1 --mode 1920x1080 --pos 4480x180 --rotate normal --output DP-2 --mode 2560x1440 --rate 144.00 --pos 1920x0 --rotate normal --output DP-3 --off --output DP-4 --mode 1920x1080 --pos 144.00 0x180 --rotate normal --output DP-5 --off
+exec xrandr --output HDMI-0 --off --output DP-0 --off --output DP-1 --mode 1920x1080 --pos 4480x180 --rotate normal --output DP-2 --mode 2560x1440 --rate 144.00 --pos 1920x0 --rotate normal --output DP-3 --off --output DP-4 --mode 1920x1080 --rate 144.00 --pos 0x180 --rotate normal --output DP-5 --off
 
 # Start Polybar on startup
 exec /home/stefan/.config/polybar/forest/launch.sh
+
+# Mount R drive to Fedora
+exec mount -t ntfs /dev/sda2 /mnt/R/
+
+# Mount Q drive to Fedora - Decided not to actually do this in order to pass it through to a Windows gaming VM
+# exec mount -t ntfs /dev/nvme1n1p2 /mnt/Q/
 
 # Gaps config
 set $mode_gaps Gaps: (o)uter, (i)nner, (h)orizontal, (v)ertical, (t)op, (r)ight, (b)ottom, (l)eft

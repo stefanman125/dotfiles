@@ -24,3 +24,6 @@ dnf install feh
 # Nvidia drivers
 dnf install akmod-nvidia
 dnf install xorg-x11-drv-nvidia-cuda
+
+# Desktop Screenshot tool for i3config lock screen
+dnf install scrot
