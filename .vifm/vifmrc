@@ -1,0 +1,5 @@
+" Add Time last modified column to each file/directory
+set viewcolumns=*{name}..,16{mtime},7{}.
+
+" Start vifm with only one pane instead of two
+only
