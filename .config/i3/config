@@ -223,12 +223,6 @@ exec xrandr --output HDMI-0 --off --output DP-0 --off --output DP-1 --mode 1920x
 # Start Polybar on startup
 exec /home/stefan/.config/polybar/forest/launch.sh
 
-# Mount R drive to Fedora - Doesn't work for some reason
-exec mount -t ntfs /dev/sda2 /mnt/R/
-
-# Mount Q drive to Fedora - Decided not to actually do this in order to pass it through to a Windows gaming VM
-# exec mount -t ntfs /dev/nvme1n1p2 /mnt/Q/
-
 # Gaps config
 set $mode_gaps Gaps: (o)uter, (i)nner, (h)orizontal, (v)ertical, (t)op, (r)ight, (b)ottom, (l)eft
 set $mode_gaps_outer Outer Gaps: +|-|0 (local), Shift + +|-|0 (global)
