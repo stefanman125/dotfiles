@@ -214,8 +214,8 @@ exec_always feh --bg-scale ~/Pictures/background.png
 
 # Assign hotkey to lock screen script
 # bindsym $mod+grave exec "i3lock -i ~/Pictures/Lock\ Screen/1.png -f"
-# locks screen with mod key and tilde/grave
-bindsym $mod+grave exec "lock"
+# locks screen with mod key and tilde/grave. Had to wrap it in a fish command because i3 cannot tell that the "lock" command is a fish alias.
+bindsym $mod+grave exec "fish -c 'lock'"
 
 # Fix primary monitor and monitor position (sorta, still need to work on the left and right monitor relative position to the center monitor)
 exec xrandr --output HDMI-0 --off --output DP-0 --off --output DP-1 --mode 1920x1080 --pos 4480x180 --rotate normal --output DP-2 --mode 2560x1440 --rate 144.00 --pos 1920x0 --rotate normal --output DP-3 --off --output DP-4 --mode 1920x1080 --rate 144.00 --pos 0x180 --rotate normal --output DP-5 --off
