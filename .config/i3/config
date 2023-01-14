@@ -200,9 +200,13 @@ bindsym XF86AudioPrev exec playerctl previous
 # Start flameshot on i3 startup, and bind print screen key to take a screenshot
 exec flameshot
 bindsym Print exec flameshot gui
+bindsym Shift+Print exec flameshot screen
 
 # Binds mod+d to start rofi, the application launcher I replaced dmenu with. Changed from $mod+d
 bindsym $mod+Shift+Return exec --no-startup-id rofi -show run
+
+# Start Duplicati on Startup
+exec duplicati
 
 # Automatically blackens the screen after 5 min of inactivity and locks it. TODO: Automatically locks but not after 5 min, but after a few min after 5 and locks without a wallpaper.
 exec_always --no-startup-id xset dpms 0 0 300 &
