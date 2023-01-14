@@ -27,3 +27,9 @@ dnf install xorg-x11-drv-nvidia-cuda
 
 # Desktop Screenshot tool for i3config lock screen
 dnf install scrot
+
+# Docker and DOcker Compose
+sudo dnf install dnf-plugins-core
+sudo dnf config-manager --add-repo https://download.docker.com/linux/fedora/docker-ce.repo
+sudo dnf install docker-ce docker-ce-cli containerd.io
+sudo dnf install docker-compose
