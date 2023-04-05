@@ -21,3 +21,4 @@ alias help-i3="open /home/stefan/Pictures/i3help.png"
 
 # Other
 alias cpclip="xclip -sel clip"
+alias rm="rm -i"
