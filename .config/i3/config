@@ -197,10 +197,8 @@ bindsym XF86AudioPause exec playerctl pause
 bindsym XF86AudioNext exec playerctl next
 bindsym XF86AudioPrev exec playerctl previous
 
-# Start flameshot on i3 startup, and bind print screen key to take a screenshot
-exec flameshot
-bindsym Print exec flameshot gui
-bindsym Shift+Print exec flameshot screen
+# bind print screen key to take a screenshot
+bindsym Print exec ksnip --rectarea
 
 # Binds mod+d to start rofi, the application launcher I replaced dmenu with. Changed from $mod+d
 bindsym $mod+Shift+Return exec --no-startup-id rofi -show run
