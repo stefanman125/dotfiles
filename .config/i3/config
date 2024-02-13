@@ -87,7 +87,7 @@ bindsym $mod+Shift+Right move right
 bindsym $mod+h split h
 
 # split in vertical orientation
-bindsym $mod+v split v
+#bindsym $mod+v split v
 
 # enter fullscreen mode for the focused container
 bindsym $mod+f fullscreen toggle
@@ -250,3 +250,9 @@ default_borderpixel 0
 
 # Start window compositor
 exec xcompmgr -c -C -f -F -s -D 2 -t-5 -l-5 -r4.2 -o.55
+
+# Start clipboard manager
+exec /home/stefan/.local/bin/greenclip daemon
+
+# Clipboard manager hotkey
+bindsym $mod+v exec rofi -modi "clipboard:/home/stefan/.local/bin/greenclip print" -show clipboard -run-command '{cmd}'
