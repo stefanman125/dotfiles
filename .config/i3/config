@@ -63,7 +63,7 @@ bindsym $mod+Shift+q kill
 bindsym $mod+j focus left
 bindsym $mod+k focus down
 bindsym $mod+l focus up
-#bindsym $mod+semicolon focus right
+bindsym $mod+semicolon focus right
 
 # alternatively, you can use the cursor keys:
 bindsym $mod+Left focus left
@@ -188,9 +188,6 @@ bindsym $mod+r mode "resize"
 
 # -------------------------- CUSTOM -------------------------
 
-# Used for Steam's Gamescope, since trying to perform any window manipulation on a gamescope window breaks it.
-#for_window [class="gamescope"] floating disable
-
 # Screen brightness controls
 bindsym XF86MonBrightnessUp exec xbacklight -inc 20 # increase screen brightness
 bindsym XF86MonBrightnessDown exec xbacklight -dec 20 # decrease screen brightness
@@ -231,7 +228,7 @@ exec_always feh --bg-scale /home/stefan/Pictures/background.jpg
 bindsym $mod+grave exec "fish -c 'lock'"
 
 # Opens emoji menu
-bindsym $mod+semicolon exec "gnome-characters"
+bindsym $mod+backslash exec "gnome-characters"
 
 # whenever gnome-characters emoji menu is open, it starts in floating window mode
 for_window [class="org.gnome.Characters"] floating enable
@@ -256,3 +253,10 @@ exec /home/stefan/.local/bin/greenclip daemon
 
 # Clipboard manager hotkey
 bindsym $mod+v exec rofi -modi "clipboard:/home/stefan/.local/bin/greenclip print" -show clipboard -run-command '{cmd}'
+
+# Start gnome-calculator floating
+for_window [class="gnome-calculator"] floating enable
+
+# Change the default color of window borders
+client.focused #13980e #13980e #000000 #2e9ef4 #285577
+client.focused_inactive #354041 #354041 #ffffff #2e9ef4 #285577
