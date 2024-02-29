@@ -246,7 +246,8 @@ gaps inner 10px
 default_borderpixel 0
 
 # Start window compositor
-exec xcompmgr -c -C -f -F -s -D 2 -t-5 -l-5 -r4.2 -o.55
+#exec_always xcompmgr -f -F -s -D 2 -t-5 -l-5 -r4.2 -o.55
+exec picom --config /home/stefan/.config/picom.conf
 
 # Start clipboard manager
 exec /home/stefan/.local/bin/greenclip daemon
