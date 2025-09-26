@@ -30,6 +30,7 @@ exec --no-startup-id dex --autostart --environment i3
 # screen before suspend. Use loginctl lock-session to lock your screen.
 # exec --no-startup-id xss-lock --transfer-sleep-lock -- i3lock --nofork
 
+
 # NetworkManager is the most popular way to manage wireless networks on Linux,
 # and nm-applet is a desktop environment-independent system tray GUI for it.
 exec --no-startup-id nm-applet
@@ -199,13 +200,14 @@ bindsym XF86AudioNext exec playerctl next
 bindsym XF86AudioPrev exec playerctl previous
 
 # bind print screen key to take a screenshot
-bindsym Print exec ksnip --rectarea
+#bindsym Print exec ksnip --rectarea
+bindsym Print exec /home/stefan/.local/bin/sway-interactive-screenshot -s region -o /tmp/screenshot && ksnip /tmp/screenshot
 
 # Start ksnip in workspace 1
 for_window [class="ksnip"] move container to workspace number $ws1
 
 # Binds mod+d to start rofi, the application launcher I replaced dmenu with. Changed from $mod+d
-bindsym $mod+Shift+Return exec --no-startup-id rofi -show run
+bindsym $mod+Shift+Return exec --no-startup-id rofi -show drun
 
 # Binds mod+shift+y to run an xpad sticky note in a floating window
 bindsym $mod+Shift+y exec xpad
@@ -214,18 +216,23 @@ for_window [class="xpad"] floating enable
 # Start Syncthing on Startup
 exec syncthing
 
-# Automatically blackens the screen after 5 min of inactivity and locks it. TODO: Automatically locks but not after 5 min, but after a few min after 5 and locks without a wallpaper.
-exec_always --no-startup-id xset dpms 0 0 300 &
-exec_always --no-startup-id xss-lock --transfer-sleep-lock -- lock --nofork
-exec_always --no-startup-id xss-lock -- lock &
+# Start gammastep on Startup
+exec gammastep
+
+# Set XDG current desktop variable for some programs like flameshot
+exec XDG_CURRENT_DESKTOP "sway"
 
 # Set background image at startup using feh
-exec_always feh --bg-scale /home/stefan/Pictures/background.jpg
+#exec_always feh --bg-scale /home/stefan/Pictures/background.jpg
+output * bg /home/stefan/Pictures/background.jpg fill
 
 # Assign hotkey to lock screen script
 # bindsym $mod+grave exec "i3lock -i ~/Pictures/Lock\ Screen/1.png -f"
 # locks screen with mod key and tilde/grave. Had to wrap it in a fish command because i3 cannot tell that the "lock" command is a fish alias.
-bindsym $mod+grave exec "fish -c 'lock'"
+#bindsym $mod+grave exec "fish -c 'lock'"
+
+#bindsym $mod+grave exec "grim /tmp/lock_screen.png; magick convert -scale 10% -blur 0x2 -resize 1000% /tmp/lock_screen.png /tmp/lock_screen.png; swaylock -i /tmp/lock_screen.png"
+bindsym $mod+grave exec "swaylock --screenshots --clock --indicator --indicator-radius 100 --indicator-thickness 7 --effect-blur 7x5 --effect-vignette 0.5:0.5 --ring-color 6b6b6b --key-hl-color 880033 --line-color 00000000 --inside-color 00000088 --separator-color 00000000 --grace 2 --fade-in 0.2 --text-color ffffff"
 
 # Opens emoji menu
 bindsym $mod+backslash exec "gnome-characters"
@@ -233,24 +240,33 @@ bindsym $mod+backslash exec "gnome-characters"
 # whenever gnome-characters emoji menu is open, it starts in floating window mode
 for_window [class="org.gnome.Characters"] floating enable
 
-#exec xrandr --output HDMI-0 --off --output DP-0 --off --output DP-1 --mode 1920x1080 --pos 4480x180 --rotate normal --output DP-2 --mode 2560x1440 --rate 144.00 --pos 1920x0 --rotate normal --output DP-3 --off --output DP-4 --mode 1920x1080 --rate 144.00 --pos 0x180 --rotate normal --output DP-5 --off
-exec xrandr --output HDMI-0 --off --output DP-0 --off --output DP-1 --mode 1920x1080 --pos 4480x0 --rotate normal --output DP-2 --primary --mode 2560x1440 --rate 143.97 --pos 1920x1080 --rotate normal --output DP-3 --off --output DP-4 --mode 1920x1080 --rate 144 --pos 0x0 --rotate normal --output DP-5 --off
+# Start Polybar on startup (waybar on wayland)
+#exec /home/stefan/.config/polybar/forest/launch.sh
+exec /usr/bin/waybar
 
-# Start Polybar on startup
-exec /home/stefan/.config/polybar/forest/launch.sh
+# Start Default Monitor Configuration on startup
+#exec /home/stefan/.local/bin/3-monitor-horizontal.sh
+output DP-1 mode 2560x1440@144hz position 1920,0
+output DP-2 mode 1920x1080@144hz position 0,180
+output DP-3 mode 1920x1080@60hz position 4480,180
 
 # Gaps (ignore the red highlighting by vim)
-gaps inner 10px
+gaps inner 8px
 
 # Hide window titles/borders
-default_borderpixel 0
+#default_borderpixel 0
 
 # Start window compositor
-#exec_always xcompmgr -f -F -s -D 2 -t-5 -l-5 -r4.2 -o.55
-exec picom --config /home/stefan/.config/picom.conf
+#exec xcompmgr -f -F -s -D 2 -t-5 -l-5 -r4.2 -o.55
+#exec picom -b --config /home/stefan/.config/picom.conf
 
 # Start clipboard manager
 exec /home/stefan/.local/bin/greenclip daemon
+
+# Disabled x11 screensaver/screen blanking when inactivity
+#exec xset s off
+#exec xset s noblank
+#exec xset -dpms
 
 # Clipboard manager hotkey
 bindsym $mod+v exec rofi -modi "clipboard:/home/stefan/.local/bin/greenclip print" -show clipboard -run-command '{cmd}'
@@ -259,5 +275,13 @@ bindsym $mod+v exec rofi -modi "clipboard:/home/stefan/.local/bin/greenclip prin
 for_window [class="gnome-calculator"] floating enable
 
 # Change the default color of window borders
-client.focused #13980e #13980e #000000 #2e9ef4 #285577
+client.focused #1a6fdf #1a6fdf #000000 #2e9ef4 #285577
 client.focused_inactive #354041 #354041 #ffffff #2e9ef4 #285577
+
+# Fix screen sharing on wayland
+exec dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP=sway
+
+input 1133:16511:Logitech_G502 {
+    accel_profile "flat" # disable mouse acceleration (enabled by default; to set it manually, use "adaptive" instead of "flat")
+    pointer_accel 0.3 # set mouse sensitivity (between -1 and 1)
+}
